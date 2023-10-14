@@ -2,10 +2,11 @@ const navEmail = document.querySelector('.navbar-email'); //elemento email
 const emailMenu = document.querySelector('.desktop-menu'); //menu que se despliega al dar click en emaill (version desktop)
 const mobileMenu=document.querySelector('.mobile-menu'); // menu que se despliega del lado izquierdo en la version mobile
 const burgerIcon = document.querySelector('.burgerIcon'); // elemento icono en forma de hamburguesa para interactuar dar click y se despliegue el mobile menu
-const menuCar = document.querySelector('.product-detail'); // menu aside que se despliega del carrito de compras
+const menuCar = document.querySelector('.car-list-detail'); // menu aside que se despliega del carrito de compras
 const carIcon = document.querySelector('.navbar-shopping-cart'); //elemento de carrito de compras 
 const mainContainer =document.querySelector('.main-container');
 const cardsContainer = document.querySelector('.cards-container'); // contenedor de cada producto
+const asideProductDetail = document.querySelector('.product-detail');
 
 
 navEmail.addEventListener('click', toggleDesktopMenu); //evento de escucha click al email en deskptop
@@ -17,6 +18,7 @@ function closeToggles(){
     const menuCarClosed = menuCar.classList.contains('inactive');
     const mobileMenuClosed = mobileMenu.classList.contains('inactive');
     const emailMenuClosed = emailMenu.classList.contains('inactive');
+    const asideProductDetailClosed = asideProductDetail.classList.contains('inactive');
     
     if(!emailMenuClosed){
          emailMenu.classList.add('inactive');
@@ -27,15 +29,21 @@ function closeToggles(){
     if(!menuCarClosed){
         menuCar.classList.add('inactive');
     }
+    if(!asideProductDetailClosed){
+        asideProductDetail.classList.add('inactive');
+    }
 }
 
 function toggleDesktopMenu() {
     const menuCarClosed = menuCar.classList.contains('inactive');
-    
+    const asideProductDetailClosed = asideProductDetail.classList.contains('inactive');
     if(!menuCarClosed){
         menuCar.classList.add('inactive');
     }
 
+    if(!asideProductDetailClosed){
+        asideProductDetail.classList.add('inactive');
+    }
     emailMenu.classList.toggle('inactive');
     
 }
@@ -54,6 +62,11 @@ function toggleMobileMenu(){
 function toggleCarIcon(){
     const mobileMenuClosed = mobileMenu.classList.contains('inactive');
     const emailMenuClosed = emailMenu.classList.contains('inactive');
+    const asideProductDetailClosed = asideProductDetail.classList.contains('inactive');
+  
+    if(!asideProductDetailClosed){
+        asideProductDetail.classList.add('inactive');
+    }
 
     if (!mobileMenuClosed){
         mobileMenu.classList.add('inactive');
