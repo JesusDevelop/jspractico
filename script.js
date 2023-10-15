@@ -4,11 +4,11 @@ const mobileMenu=document.querySelector('.mobile-menu'); // menu que se desplieg
 const burgerIcon = document.querySelector('.burgerIcon'); // elemento icono en forma de hamburguesa para interactuar dar click y se despliegue el mobile menu
 const menuCar = document.querySelector('.car-list-detail'); // menu aside que se despliega del carrito de compras
 const carIcon = document.querySelector('.navbar-shopping-cart'); //elemento de carrito de compras 
-const mainContainer =document.querySelector('.main-container');
+const mainContainer =document.querySelector('.main-container'); //contenedor principal de todos los productos
 const cardsContainer = document.querySelector('.cards-container'); // contenedor de cada producto
-const asideProductDetail = document.querySelector('.product-detail');
-const productDetailCloseIcon = document.querySelector('.product-detail-close');
-const productDetailPrice = document.querySelector('#productDetail-price');
+const asideProductDetail = document.querySelector('.product-detail'); // detalle del producto desplegado en el lateral
+const productDetailCloseIcon = document.querySelector('.product-detail-close'); // icono que cierra el detalle del producto
+const productDetailPrice = document.querySelector('#productDetail-price'); //
 const productDetailImg = document.querySelector('#productDetail-img');
 
 
@@ -87,7 +87,7 @@ function openProductDetail()  {
 
     productDetailImg.setAttribute("src", event.target.src);
     productDetailPrice.innerText = event.target.nextElementSibling.innerText;
-    
+
     asideProductDetail.classList.remove( 'inactive' )
 
 }
