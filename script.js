@@ -89,6 +89,7 @@ function openProductDetail()  {
 
     productDetailImg.setAttribute("src", event.target.src);
     productDetailPrice.innerText = event.target.nextElementSibling.innerText;
+    productDetailDesciption.innerText = console.log(event.target.nextSibling);
     
 
     asideProductDetail.classList.remove( 'inactive' )
@@ -168,9 +169,7 @@ function renderProducts(arr){
         const img = document.createElement('img');
         img.setAttribute('src', product.images[0]);
 
-        img.addEventListener('click',openProductDetail);
-       
-     
+
         const productInfo = document.createElement('div');
         productInfo.classList.add('product-info');
      
@@ -180,11 +179,13 @@ function renderProducts(arr){
         productInfoDivPrice.innerText = '$' + product.price;
         const productInfoDivName = document.createElement('p');
         productInfoDivName.innerText = product.title;
-        productDetailDesciption.innerText = product.description;
+        const productInfoDivDescription = document.createElement('p');
+        productInfoDivDescription.innerText = product.description;
+        productInfoDivDescription.classList.add('inactive');
         
 
           //metiento el precio y el name dentro de la etiqueta infodiv
-        productInfoDiv.append(productInfoDivPrice,productInfoDivName);
+        productInfoDiv.append(productInfoDivPrice,productInfoDivName,productInfoDivDescription);
 
      
         const productInfoFigure = document.createElement('figure');
@@ -199,6 +200,12 @@ function renderProducts(arr){
          productCard.append(img,productInfo);
      
          cardsContainer.append(productCard);
+
+         img.addEventListener('click',()=>{
+            productInfoDivDescription.classList.remove('inactive');
+            openProductDetail();
+            productInfoDivDescription.classList.add('inactive');
+        });
      
      }
 }
