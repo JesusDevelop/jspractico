@@ -89,7 +89,6 @@ function openProductDetail()  {
 
     productDetailImg.setAttribute("src", event.target.src);
     productDetailPrice.innerText = event.target.nextElementSibling.innerText;
-    productDetailDesciption.innerText = console.log(event.target.nextSibling);
     
 
     asideProductDetail.classList.remove( 'inactive' )
