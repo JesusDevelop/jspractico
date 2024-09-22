@@ -10,7 +10,9 @@ const asideProductDetail = document.querySelector('.product-detail'); // detalle
 const productDetailCloseIcon = document.querySelector('.product-detail-close'); // icono que cierra el detalle del producto
 const productDetailPrice = document.querySelector('#productDetail-price'); //
 const productDetailImg = document.querySelector('#productDetail-img');
+const productDetailDesciption = document.querySelector('#productDetail-description');
 
+const API= 'https://api.escuelajs.co/api/v1/products'
 
 navEmail.addEventListener('click', toggleDesktopMenu); //evento de escucha click al email en deskptop
 burgerIcon.addEventListener('click',toggleMobileMenu); //evento de escucha click al icono de hamburguesa en mobile (menu mobile)
@@ -87,6 +89,7 @@ function openProductDetail()  {
 
     productDetailImg.setAttribute("src", event.target.src);
     productDetailPrice.innerText = event.target.nextElementSibling.innerText;
+    
 
     asideProductDetail.classList.remove( 'inactive' )
 
@@ -97,60 +100,12 @@ function closeProductDetail(){
 }
 
 
+
 //   -----------  MAIN CONTAINER --------
 
 //      ----Simulando conexion con bd creando un array --
 
-const productList = [];
  
-// agregando articulos al array (como objetos por cada elemento) 
-productList.push({
-    name: 'Bike',
-    price: 1200,
-    image:'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-});
-
-productList.push({
-    name: 'Bike Helmet',
-    price: 500,
-    image:'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-});
-
-productList.push ({
-    name:'Bicycle helmet',
-    price: 1600,
-    image: 'https://m.media-amazon.com/images/I/61eExL-rIAL._AC_SL1001_.jpg'
-});
-productList.push ({
-    name:'Bicycle helmet',
-    price: 1500,
-    image: 'https://assets.specialized.com/i/specialized/60822-140_HLMT_CHAMONIX-HLMT-MIPS-CE-MRN-M-L_HERO?bg=rgb(241,241,241)&w=1600&h=900&fmt=auto'
-});
-productList.push ({
-    name:'Seat',
-    price: 300,
-    image: 'https://m.media-amazon.com/images/I/61e+sZ9rgNL._AC_SL1500_.jpg'
-});
-productList.push ({
-    name:'Tennis Montain Bike',
-    price: 2200,
-    image: 'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/8ea578f6c07847fca2d0ac85011d7f1f_9366/Tenis_para_Mountain_Bike_Five_Ten_Freerider_Negro_FW2835_01_standard.jpg'
-});
-productList.push ({
-    name:'Sunglasses',
-    price: 800,
-    image: 'https://cdn.siroko.com/s/files/1/1220/6874/products/gafas-siroko-tech-k3s-london-lateral/1200x/crop_center.jpg?v=1635209602'
-});
-productList.push ({
-    name:'Sunglasses',
-    price: 600,
-    image: 'https://cdn.siroko.com/s/files/1/1220/6874/products/siroko-tech-k3s-clearfog-lente-antiniebla-frontal/1200x/crop_center.jpg?v=1635209603'
-});
-productList.push ({
-    name:'Bicycle seat bag',
-    price: 876,
-    image: 'https://m.media-amazon.com/images/I/81k2Gmal+VL._AC_SL1500_.jpg'
-}); 
 
 /*
 <div class="product-card">
@@ -166,8 +121,43 @@ productList.push ({
 </div>
 </div>
 
+
+{
+    "id": 16,
+    "title": "Classic White Tee - Timeless Style and Comfort",
+    "price": 73,
+    "description": "Elevate your everyday wardrobe with our Classic White Tee. Crafted from premium soft cotton material, this versatile t-shirt combines comfort with durability, perfect for daily wear. Featuring a relaxed, unisex fit that flatters every body type, it's a staple piece for any casual ensemble. Easy to care for and machine washable, this white tee retains its shape and softness wash after wash. Pair it with your favorite jeans or layer it under a jacket for a smart look.",
+    "images": [
+        "https://i.imgur.com/Y54Bt8J.jpeg",
+        "https://i.imgur.com/SZPDSgy.jpeg",
+        "https://i.imgur.com/sJv4Xx0.jpeg"
+    ],
+    "creationAt": "2024-09-22T04:33:34.000Z",
+    "updatedAt": "2024-09-22T04:33:34.000Z",
+    "category": {
+        "id": 1,
+        "name": "nuevo",
+        "image": "https://i.imgur.com/QkIa5tT.jpeg",
+        "creationAt": "2024-09-22T04:33:34.000Z",
+        "updatedAt": "2024-09-22T04:39:02.000Z"
+    }
+}
+
 */
 //creando el html de cada producto y agregandole su respectiva clase (la estructura es como el html comentado antes de este comentario)
+
+async function fetchData(url) {
+    const response = await fetch(url);
+    const data = await response.json();
+    if (!response.ok){
+        console.log(response.status)
+        return new Error (`Error en respuesta, estado ${response.status}`);
+    }
+    else{
+        return data;
+    }
+}
+
 
 function renderProducts(arr){
     for (product of arr){
@@ -176,8 +166,10 @@ function renderProducts(arr){
         productCard.classList.add('product-card');
      
         const img = document.createElement('img');
-        img.setAttribute('src', product.image);
+        img.setAttribute('src', product.images[0]);
+
         img.addEventListener('click',openProductDetail);
+       
      
         const productInfo = document.createElement('div');
         productInfo.classList.add('product-info');
@@ -187,9 +179,13 @@ function renderProducts(arr){
         const productInfoDivPrice = document.createElement('p');
         productInfoDivPrice.innerText = '$' + product.price;
         const productInfoDivName = document.createElement('p');
-        productInfoDivName.innerText = product.name;
+        productInfoDivName.innerText = product.title;
+        productDetailDesciption.innerText = product.description;
+        
+
           //metiento el precio y el name dentro de la etiqueta infodiv
         productInfoDiv.append(productInfoDivPrice,productInfoDivName);
+
      
         const productInfoFigure = document.createElement('figure');
         const productInfoFigureImg = document.createElement('img');
@@ -206,7 +202,19 @@ function renderProducts(arr){
      
      }
 }
+const datos = async (urlApi)=>{
+    try{
+        new URL(urlApi);
+        const productos = await fetchData(urlApi);
+        const primerosProd = await productos.slice(0,20);
+        renderProducts (primerosProd);
+        
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 
-renderProducts(productList);
+datos(API);
 
 
